@@ -31,7 +31,6 @@ based on binary search tree(Variant6).
 ## Changelog
 
 - 16.4.2024 - 0
-  - Initialization.
   - Implementation of `add`, `set`, `remove`, `member`, `size`,
     `from_dict` and `to_dict` features
   - Unit tests for above features

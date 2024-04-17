@@ -1,31 +1,32 @@
-# GROUP-NAME - lab NUMBER - variant NUMBER
+# GROUP-"I like studying" - lab 1 - variant 6
 
-This is an example project which demonstrates project structure and necessary
-CI checks. It is not the best structure for real-world projects, but good
-enough for educational purposes.
+This is my lab1 of CPO class, part of the task work, still unfinished
+
 
 ## Project structure
 
-- `foo.py` -- implementation of `Foo` class with `hello` and `add` features.
-   Stateless.
-- `foo_test.py` -- unit and PBT tests for `Foo`.
+- `BSTDict.py` -- implementation of `BSTDictionary` class with `add`,`set`, `remove`, `member`, `size`, `from_dict` and `to_dict` features.
+
+- `BSTDict_test.py` -- unit tests for `BSTDict`.
 
 ## Features
 
-- PBT: `test_add_commutative`
+- Add element to the dictionary: `add` and `_add`
+- Modification of element: `set`
+- Remove element from the dictionary: `remove` and `_reomve`
+- Search: `member` and `_member`
+- 
 
 ## Contribution
 
-- Aleksandr Penskoi (EMAIL) -- all work.
+- AnYifei (645192770@qq.com) -- all work.
 
 ## Changelog
 
-- 29.03.2022 - 2
-  - Add test coverage.
-- 29.03.2022 - 1
-  - Update README. Add formal sections.
-- 29.03.2022 - 0
+
+- 16.4.2024 - 0
   - Initial
+  - Implication of add, set, remove, member, size, from_dict and to_dict.
 
 ## Design notes
 

@@ -6,7 +6,7 @@ based on binary search tree(Variant6).
 ## Project structure
 
 - `BSTDict.py` -- implementation of `BSTDictionary` class with features in `Features`.
-- `BSTDict_test.py` -- unit tests for `BSTDict`.
+- `BSTDict_test.py` -- unit and PBT test for `BSTDict`.
 
 ## Features
 

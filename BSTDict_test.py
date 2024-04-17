@@ -13,7 +13,11 @@ class TestBSTDict(unittest.TestCase):
         mydict.add('Variant', 6)
         mydict.add('GroupName', 'I LIKE STUDYING')
         self.assertEqual(mydict.to_dict(),
-                         {'GroupName': 'I LIKE STUDYING', 'LabWork': 1, 'Name': 'AnYifei', 'Variant': 6})
+                         {
+                             'GroupName': 'I LIKE STUDYING',
+                             'LabWork': 1,
+                             'Name': 'AnYifei',
+                             'Variant': 6})
         # Test the implementation correctly works with None value:
         with self.assertRaises(ValueError):
             mydict.add(None, '123')
@@ -24,10 +28,16 @@ class TestBSTDict(unittest.TestCase):
         mydict.add('Name', 'AnYifei')
         mydict.add('LabWork', 1)
         mydict.add('Variant', 6)
-        mydict.add('GroupName', 'I LIKE STUDYING')
-        mydict.set('GroupName', 'I DONT LIKE STUDYING')
+        mydict.add('GroupName',
+                   'I LIKE STUDYING')
+        mydict.set('GroupName',
+                   'I DONT LIKE STUDYING')
         self.assertEqual(mydict.to_dict(),
-                         {'GroupName': 'I DONT LIKE STUDYING', 'LabWork': 1, 'Name': 'AnYifei', 'Variant': 6})
+                         {
+                             'GroupName': 'I DONT LIKE STUDYING',
+                             'LabWork': 1,
+                             'Name': 'AnYifei',
+                             'Variant': 6})
 
     def test_remove(self):
         # test remove and size features
@@ -41,7 +51,9 @@ class TestBSTDict(unittest.TestCase):
         self.assertEqual(mydict.size(), 3)
         self.assertEqual(mydict.remove('GroupName'), False)
         self.assertEqual(mydict.size(), 3)
-        self.assertEqual(mydict.to_dict(), {'LabWork': 1, 'Name': 'AnYifei', 'Variant': 6})
+        self.assertEqual(mydict.to_dict(), {'LabWork': 1,
+                                            'Name': 'AnYifei',
+                                            'Variant': 6})
 
     def test_member(self):
         mydict = BSTDictionary()
@@ -81,27 +93,34 @@ class TestBSTDict(unittest.TestCase):
         mydict.add('Pi', 3.14)
         mydict.add(4, None)
         mydict.add('5', 6)
-        # Since the dictionary is based on a binary search tree, the dictionary elements are sorted (by key).
-        self.assertEqual(mydict.to_dict(), {1: 'Value1', 4: None, '5': 6, 'Pi': 3.14, })
+        self.assertEqual(mydict.to_dict(),
+                         {1: 'Value1', 4: None, '5': 6, 'Pi': 3.14, })
 
     def test_filter(self):
         mydict = BSTDictionary()
         mydict.from_dict({1: 1, 2: 'a', 'b': 3, '4': 4, 5: None})
-        self.assertEqual(mydict.filter(lambda key: isinstance(key, int)), {1: 1, 2: 'a', 5: None})
+        self.assertEqual(mydict.filter(lambda key: isinstance(key, int)),
+                         {1: 1, 2: 'a', 5: None})
 
     def test_map(self):
         mydict = BSTDictionary()
         mydict.from_dict({1: 1, 2: 2, 3: 3, 4: 4, 5: 5})
-        self.assertEqual(mydict.map(lambda key, value: (str(key), str(value))), {'1': '1', '2': '2', '3': '3', '4': '4', '5': '5'})
+        self.assertEqual(mydict.map(lambda key, value:
+                                    (str(key), str(value))),
+                         {'1': '1', '2': '2', '3': '3', '4': '4', '5': '5'})
         mydict.from_dict({'1': 1, '2': 2, '3': 3, '4': 4, '5': 5})
-        self.assertEqual(mydict.map(lambda key, value: (int(key), value*key)), {1: 1, 2: 4, 3: 9, 4: 16, 5: 25})
+        self.assertEqual(mydict.map(lambda key, value:
+                                    (int(key), value * key)),
+                         {1: 1, 2: 4, 3: 9, 4: 16, 5: 25})
 
     def test_reduce(self):
         mydict = BSTDictionary()
         mydict.from_dict({})
-        self.assertEqual(mydict.reduce(lambda key, value, st: st+key+value, 0), 0)
+        self.assertEqual(mydict.reduce(lambda key, value, st:
+                                       st + key + value, 0), 0)
         mydict.from_dict({1: 'a', 2: 'b', 3: 'c', 4: 'd'})
-        self.assertEqual(mydict.reduce(lambda key, value, st: st+key, 0), 10)
+        self.assertEqual(mydict.reduce(lambda key, value, st:
+                                       st + key, 0), 10)
         test_data = [
             {},
             {'a': '1', 'b': '2'},
@@ -110,7 +129,8 @@ class TestBSTDict(unittest.TestCase):
         for e in test_data:
             mydict = BSTDictionary()
             mydict.from_dict(e)
-            self.assertEqual(mydict.reduce(lambda key, value, st: st+1, 0), mydict.size())
+            self.assertEqual(mydict.reduce(lambda key, value, st:
+                                           st + 1, 0), mydict.size())
 
     @given(st.dictionaries(st.text(), st.text()))
     def test_from_dict_to_dict_equality(self, a):
@@ -155,4 +175,5 @@ class TestBSTDict(unittest.TestCase):
         dict2 = BSTDictionary()
         dict2.from_dict({"c": 3, "d": 4, "e": 5})
         concat_dict = dict1.concat(dict2)
-        self.assertEqual(concat_dict.to_dict(), {"a": 1, "b": 2, "c": 3, "d": 4, "e": 5})
+        self.assertEqual(concat_dict.to_dict(),
+                         {"a": 1, "b": 2, "c": 3, "d": 4, "e": 5})

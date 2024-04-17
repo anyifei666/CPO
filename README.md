@@ -30,7 +30,7 @@ based on binary search tree(Variant6).
 
 ## Changelog
 
-- 17.4.2024 - 2 
+- 17.4.2024 - 2
    - Update README.
    - Add test coverage.
 - 17.4.2024 - 1

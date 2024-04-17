@@ -30,16 +30,16 @@ based on binary search tree(Variant6).
 
 ## Changelog
 
-- 17.4.2024 - 2
-  - Update README. 
-  - Add test coverage.
+- 17.4.2024 - 2 
+   - Update README.
+   - Add test coverage.
 - 17.4.2024 - 1
-  - Modification of part features.
-  - Implementation of part features.
-  - Unit tests
+   - Modification of part features.
+   - Implementation of part features.
+   - Unit tests
 - 16.4.2024 - 0
-  - Initialization.
-  - Implementation of part features.
+   - Initialization.
+   - Implementation of part features.
 
 ## Design notes
 

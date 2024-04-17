@@ -31,9 +31,10 @@ based on binary search tree(Variant6).
 ## Changelog
 
 - 16.4.2024 - 0
+  - Initialization.
   - Implementation of `add`, `set`, `remove`, `member`, `size`,
-    `from_dict` and `to_dict` features
-  - Unit tests for above features
+    `from_dict` and `to_dict` features.
+  - Unit tests for above features.
 - 17.4.2024 - 1
   - Modification of `add`, `set`, `remove`, `member`, `size`,
     `from_dict` and `to_dict` features.
@@ -41,7 +42,7 @@ based on binary search tree(Variant6).
     `empty` and `concat` features.
   - Unit tests for all above features and PBT for `from_dict`
     and `to_dict`(`test_from_dict_to_dict_equality`
-    and `test_python_len_and_mydict_size_inequality`)
+    and `test_python_len_and_mydict_size_inequality`).
 
 ## Design notes
 

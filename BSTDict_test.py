@@ -111,8 +111,7 @@ class TestBSTDict(unittest.TestCase):
         mydict = BSTDictionary()
         mydict.from_dict({1: 1, 2: "a", "b": 3, "4": 4, 5: None})
         self.assertEqual(
-            mydict.filter(lambda key: isinstance(key, int)),
-            {1: 1, 2: "a", 5: None}
+            mydict.filter(lambda key: isinstance(key, int)), {1: 1, 2: "a", 5: None}
         )
 
     def test_map(self):
@@ -131,12 +130,10 @@ class TestBSTDict(unittest.TestCase):
     def test_reduce(self):
         mydict = BSTDictionary()
         mydict.from_dict({})
-        self.assertEqual(mydict.reduce(lambda key, value, st:
-                                       st + key + value, 0), 0)
+        self.assertEqual(mydict.reduce(lambda key, value, st: st + key + value, 0), 0)
         mydict.from_dict({1: "a", 2: "b", 3: "c", 4: "d"})
         self.assertEqual(mydict.reduce(lambda key, value, st: st + key, 0), 10)
-        test_data = [{}, {"a": "1", "b": "2"},
-                     {"a": "1", "b": "2", "c": "3", "d": "4"}]
+        test_data = [{}, {"a": "1", "b": "2"}, {"a": "1", "b": "2", "c": "3", "d": "4"}]
         for e in test_data:
             mydict = BSTDictionary()
             mydict.from_dict(e)
@@ -205,8 +202,7 @@ class TestBSTDict(unittest.TestCase):
         dict_c.from_dict(c)
         dict1 = dict_a.concat(dict_b)
         dict2 = dict_b.concat(dict_c)
-        self.assertEqual(dict1.concat(dict_c).to_dict(),
-                         dict_a.concat(dict2).to_dict())
+        self.assertEqual(dict1.concat(dict_c).to_dict(), dict_a.concat(dict2).to_dict())
 
     @given(st.dictionaries(st.text(), st.text()))
     def test_PBT_monoid_Identity_element(self, a):

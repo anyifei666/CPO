@@ -30,6 +30,9 @@ based on binary search tree(Variant6).
 
 ## Changelog
 
+- 20.4.2024 - 3
+   - Add PBT tests for monoid.
+   - Add code formatter to CI.
 - 17.4.2024 - 2
    - Update README.
    - Add test coverage.

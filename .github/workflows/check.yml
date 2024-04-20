@@ -33,6 +33,9 @@ jobs:
       - name: Type checks
         run: mypy .
 
+      - name: Format code
+        run: black .
+
       # if you pretend to make a typed version of your program, you should uncomment these lines:  
       # - name: Strict type checks 
       #   run: mypy . --strict

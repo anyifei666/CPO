@@ -17,7 +17,7 @@ class BSTDictionary(object):
 
     def _add(self, node, key, value):
         if key is None:
-            raise ValueError('Key cannot be None')
+            raise ValueError("Key cannot be None")
         if node is None:
             return TreeNode(key, value)
         if str(key) < str(node.key):

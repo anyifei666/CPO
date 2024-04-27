@@ -30,6 +30,11 @@ based on binary search tree(Variant6).
 
 ## Changelog
 
+- 27.2.2024 - 4
+   - The `concat` function modification.
+   - Add static typing to the library.
+   - Update `check.yml`: --strict in CI for mypy.
+   - Update README.
 - 20.4.2024 - 3
    - Add PBT tests for monoid.
    - Add code formatter to CI.

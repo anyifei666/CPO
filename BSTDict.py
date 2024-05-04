@@ -1,10 +1,13 @@
-from typing import Optional, Tuple, Dict, Callable, Any, Iterator, List
+from typing import Optional, Tuple, Dict, Callable, Iterator, List, Union, Any
+
+Keytype = Union[int, float, str]
+Valuetype = Union[int, float, str, None]
 
 
 class TreeNode(object):
-    def __init__(self, key: Any, value: Any) -> None:
-        self.key: Any = key
-        self.value: Any = value
+    def __init__(self, key: Keytype, value: Valuetype) -> None:
+        self.key: Keytype = key
+        self.value: Valuetype = value
         self.left: Optional[TreeNode] = None
         self.right: Optional[TreeNode] = None
 
@@ -14,11 +17,12 @@ class BSTDictionary(object):
         self.root: Optional[TreeNode] = root
         self.count: int = 0
 
-    def add(self, key: Any, value: Any) -> None:
+    def add(self, key: Keytype, value: Valuetype) -> None:
         self.root = self._add(self.root, key, value)
         self.count += 1
 
-    def _add(self, node: Optional[TreeNode], key: Any, value: Any) -> TreeNode:
+    def _add(self, node: Optional[TreeNode],
+             key: Keytype, value: Valuetype) -> TreeNode:
         if key is None:
             raise ValueError("Key cannot be None")
         if node is None:
@@ -31,7 +35,7 @@ class BSTDictionary(object):
             node.value = value
         return node
 
-    def set(self, key: Any, value: Any) -> None:
+    def set(self, key: Keytype, value: Valuetype) -> None:
         self.add(key, value)
 
     def _find_min(self, node: Optional[TreeNode]) -> TreeNode:
@@ -40,13 +44,13 @@ class BSTDictionary(object):
         assert node is not None
         return node
 
-    def remove(self, key: Any) -> bool:
+    def remove(self, key: Keytype) -> bool:
         self.root, removed = self._remove(self.root, key)
         if removed:
             self.count -= 1
         return removed
 
-    def _remove(self, node: Optional[TreeNode], key: Any) \
+    def _remove(self, node: Optional[TreeNode], key: Keytype) \
             -> Tuple[Optional[TreeNode], bool]:
         if node is None:
             return None, False
@@ -67,10 +71,10 @@ class BSTDictionary(object):
                 removed = True
         return node, removed
 
-    def member(self, key: Any) -> Any:
+    def member(self, key: Keytype) -> Valuetype:
         return self._member(self.root, key)
 
-    def _member(self, node: Optional[TreeNode], key: Any) -> Any:
+    def _member(self, node: Optional[TreeNode], key: Keytype) -> Valuetype:
         if node is None:
             return False
         if str(key) == str(node.key):
@@ -83,31 +87,31 @@ class BSTDictionary(object):
     def size(self) -> int:
         return self.count
 
-    def from_dict(self, dictionary: Dict[Any, Any]) -> None:
+    def from_dict(self, dictionary: Dict[Keytype, Valuetype]) -> None:
         for key, value in dictionary.items():
             self.add(key, value)
 
-    def to_dict(self) -> Dict[Any, Any]:
-        result: Dict[Any, Any] = {}
+    def to_dict(self) -> Dict[Keytype, Valuetype]:
+        result: Dict[Keytype, Valuetype] = {}
         self._to_dict(self.root, result)
         return result
 
     def _to_dict(self, node: Optional[TreeNode],
-                 result: Dict[Any, Any]) -> None:
+                 result: Dict[Keytype, Valuetype]) -> None:
         if node is None:
             return
         self._to_dict(node.left, result)
         result[node.key] = node.value
         self._to_dict(node.right, result)
 
-    def filter(self, f: Callable[[Any], bool]) -> Dict[Any, Any]:
-        filtered_dict: Dict[Any, Any] = {}
+    def filter(self, f: Callable[[Keytype], bool]) -> Dict[Keytype, Valuetype]:
+        filtered_dict: Dict[Keytype, Valuetype] = {}
         self._filter(self.root, filtered_dict, f)
         return filtered_dict
 
     def _filter(self, node: Optional[TreeNode],
-                filtered_dict: Dict[Any, Any],
-                f: Callable[[Any], bool]) -> None:
+                filtered_dict: Dict[Keytype, Valuetype],
+                f: Callable[[Keytype], bool]) -> None:
         if node is None:
             return
         self._filter(node.left, filtered_dict, f)
@@ -115,15 +119,16 @@ class BSTDictionary(object):
             filtered_dict[node.key] = node.value
         self._filter(node.right, filtered_dict, f)
 
-    def map(self, f: Callable[[Any, Any], Tuple[Any, Any]]) -> Dict[Any, Any]:
-        mapped_dict: Dict[Any, Any] = {}
+    def map(self, f: Callable[[Any, Any], Tuple[Keytype, Valuetype]])\
+            -> Dict[Keytype, Valuetype]:
+        mapped_dict: Dict[Keytype, Valuetype] = {}
         self._map(self.root, mapped_dict, f)
         return mapped_dict
 
     def _map(self, node: Optional[TreeNode],
-             mapped_dict: Dict[Any, Any],
-             f: Callable[[Any, Any],
-             Tuple[Any, Any]]) -> None:
+             mapped_dict: Dict[Keytype, Valuetype],
+             f: Callable[[Keytype, Valuetype],
+             Tuple[Keytype, Valuetype]]) -> None:
         if node is None:
             return
         self._map(node.left, mapped_dict, f)
@@ -131,7 +136,7 @@ class BSTDictionary(object):
         mapped_dict[mapped_key] = mapped_value
         self._map(node.right, mapped_dict, f)
 
-    def reduce(self, f: Callable[[Any, Any, Any], Any],
+    def reduce(self, f: Callable[[Any, Any, int], int],
                initial_state: int) -> int:
         def _reduce(node: Optional[TreeNode], state: int) -> int:
             if node is None:
@@ -142,12 +147,12 @@ class BSTDictionary(object):
 
         return _reduce(self.root, initial_state)
 
-    def __iter__(self) -> Iterator[Tuple[Any, Any]]:
+    def __iter__(self) -> Iterator[Tuple[Keytype, Valuetype]]:
         self.stack: List[TreeNode] = []
         self._traverse_left(self.root)
         return self
 
-    def __next__(self) -> Tuple[Any, Any]:
+    def __next__(self) -> Tuple[Keytype, Valuetype]:
         if not self.stack:
             raise StopIteration
         node = self.stack.pop()
@@ -159,6 +164,7 @@ class BSTDictionary(object):
             self.stack.append(node)
             node = node.left
 
+    # I think concat is already a mutable implementation. Maybe?
     def concat(self, dict2: 'BSTDictionary') -> 'BSTDictionary':
         if dict2.root:
             self._concat(self.root, dict2.root)

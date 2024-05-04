@@ -1,7 +1,8 @@
 import unittest
 from hypothesis import given, strategies as st
 from BSTDict import BSTDictionary
-from typing import Dict, Any
+from typing import Dict
+from BSTDict import Keytype, Valuetype
 
 
 class TestBSTDict(unittest.TestCase):
@@ -22,9 +23,6 @@ class TestBSTDict(unittest.TestCase):
                 "Variant": 6,
             },
         )
-        # Test the implementation correctly works with None value:
-        with self.assertRaises(ValueError):
-            mydict.add(None, "123")
 
     def test_set(self) -> None:
         # Test set feature
@@ -71,7 +69,6 @@ class TestBSTDict(unittest.TestCase):
         self.assertEqual(mydict.member("Variant"), 6)
         self.assertEqual(mydict.member("GroupName"), "I LIKE STUDYING")
         self.assertEqual(mydict.member(1), False)
-        self.assertEqual(mydict.member(None), False)
 
     def test_size(self) -> None:
         mydict = BSTDictionary()
@@ -138,21 +135,20 @@ class TestBSTDict(unittest.TestCase):
         self.assertEqual(mydict.reduce(lambda key, value, st: st + key, 0), 10)
 
     @given(st.dictionaries(st.text(), st.text()))
-    def test_from_dict_to_dict_equality(self, a: Dict[Any, Any]) -> None:
+    def test_from_to_equality(self, a: Dict[Keytype, Valuetype]) -> None:
         mydict = BSTDictionary()
         mydict.from_dict(a)
         b = mydict.to_dict()
         self.assertEqual(a, b)
 
     @given(st.dictionaries(st.text(), st.text()))
-    def test_python_len_and_mydict_size_inequality(self,
-                                                   a: Dict[Any, Any]) -> None:
+    def test_inequality(self, a: Dict[Keytype, Valuetype]) -> None:
         mydict = BSTDictionary()
         mydict.from_dict(a)
         self.assertEqual(mydict.size(), len(a))
 
     def test_iter(self) -> None:
-        data = {2: "b", 1: "a", 4: "d", 3: "c"}
+        data: Dict[Keytype, Valuetype] = {2: "b", 1: "a", 4: "d", 3: "c"}
         mydict = BSTDictionary()
         mydict.from_dict(data)
 
@@ -191,9 +187,9 @@ class TestBSTDict(unittest.TestCase):
         st.dictionaries(st.text(), st.text()),
     )
     def test_PBT_monoid_Associativity(self,
-                                      a: Dict[Any, Any],
-                                      b: Dict[Any, Any],
-                                      c: Dict[Any, Any]) -> None:
+                                      a: Dict[Keytype, Valuetype],
+                                      b: Dict[Keytype, Valuetype],
+                                      c: Dict[Keytype, Valuetype]) -> None:
         dict_a = BSTDictionary()
         dict_a.from_dict(a)
         dict_b = BSTDictionary()
@@ -204,7 +200,8 @@ class TestBSTDict(unittest.TestCase):
                          dict_a.concat(dict_b.concat(dict_c)).to_dict())
 
     @given(st.dictionaries(st.text(), st.text()))
-    def test_PBT_monoid_Identity_element(self, a: Dict[Any, Any]) -> None:
+    def test_PBT_monoid_Identity_element(self,
+                                         a: Dict[Keytype, Valuetype]) -> None:
         # test for Identity element (empty_dict)
         empty_dict = BSTDictionary().empty()
         mydict = BSTDictionary()

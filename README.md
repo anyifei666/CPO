@@ -30,6 +30,9 @@ based on binary search tree(Variant6).
 
 ## Changelog
 
+- 4.5.2024 - 5
+   - Modify static typing.
+   - Update README.
 - 27.2.2024 - 4
    - The `concat` function modification.
    - Add static typing to the library.

@@ -30,6 +30,9 @@ based on binary search tree(Variant6).
 
 ## Changelog
 
+- 12.5.2024 - 6
+   - Modify ‘test_PBT_monoid_Associativity’.
+   - Modify the type annotation.
 - 4.5.2024 - 5
    - Modify static typing.
    - Update README.

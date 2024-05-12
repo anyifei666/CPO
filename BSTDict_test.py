@@ -2,14 +2,14 @@ import unittest
 from hypothesis import given, strategies as st
 from BSTDict import BSTDictionary
 from typing import Dict
-from BSTDict import Keytype, Valuetype
+from BSTDict import KeyType, ValueType
 
 
 class TestBSTDict(unittest.TestCase):
 
     def test_add(self) -> None:
         # Test adding key-value pairs
-        mydict = BSTDictionary()
+        mydict = BSTDictionary[str, str | int]()
         mydict.add("Name", "AnYifei")
         mydict.add("LabWork", 1)
         mydict.add("Variant", 6)
@@ -26,7 +26,7 @@ class TestBSTDict(unittest.TestCase):
 
     def test_set(self) -> None:
         # Test set feature
-        mydict = BSTDictionary()
+        mydict = BSTDictionary[str, str | int]()
         mydict.add("Name", "AnYifei")
         mydict.add("LabWork", 1)
         mydict.add("Variant", 6)
@@ -44,7 +44,7 @@ class TestBSTDict(unittest.TestCase):
 
     def test_remove(self) -> None:
         # test remove and size features
-        mydict = BSTDictionary()
+        mydict = BSTDictionary[str, str | int | float]()
         mydict.add("Name", "AnYifei")
         mydict.add("LabWork", 1)
         mydict.add("Variant", 6)
@@ -59,7 +59,7 @@ class TestBSTDict(unittest.TestCase):
         )
 
     def test_member(self) -> None:
-        mydict = BSTDictionary()
+        mydict = BSTDictionary[str | int | float, str | int | float]()
         mydict.add("Name", "AnYifei")
         mydict.add("LabWork", 1)
         mydict.add("Variant", 6)
@@ -71,7 +71,7 @@ class TestBSTDict(unittest.TestCase):
         self.assertEqual(mydict.member(1), False)
 
     def test_size(self) -> None:
-        mydict = BSTDictionary()
+        mydict = BSTDictionary[str, str | int | float]()
         mydict.add("Name", "AnYifei")
         self.assertEqual(mydict.size(), 1)
         mydict.add("LabWork", 1)
@@ -80,7 +80,7 @@ class TestBSTDict(unittest.TestCase):
         self.assertEqual(mydict.size(), 3)
 
     def test_from_dict(self) -> None:
-        mydict = BSTDictionary()
+        mydict = BSTDictionary[str | int | float, str | int | float | None]()
         mydict.from_dict({1: "Value1", "Pi": 3.14, 4: None, "5": 6})
         self.assertEqual(mydict.size(), 4)
         self.assertEqual(mydict.member(1), "Value1")
@@ -90,7 +90,7 @@ class TestBSTDict(unittest.TestCase):
         self.assertEqual(mydict.member(2), False)
 
     def test_to_dict(self) -> None:
-        mydict = BSTDictionary()
+        mydict = BSTDictionary[str | int | float, str | int | float | None]()
         mydict.add(1, "Value1")
         mydict.add("Pi", 3.14)
         mydict.add(4, None)
@@ -106,7 +106,7 @@ class TestBSTDict(unittest.TestCase):
         )
 
     def test_filter(self) -> None:
-        mydict = BSTDictionary()
+        mydict = BSTDictionary[str | int | float, str | int | float | None]()
         mydict.from_dict({1: 1, 2: "a", "b": 3, "4": 4, 5: None})
         self.assertEqual(
             mydict.filter(lambda key: isinstance(key, int)),
@@ -114,7 +114,7 @@ class TestBSTDict(unittest.TestCase):
         )
 
     def test_map(self) -> None:
-        mydict = BSTDictionary()
+        mydict = BSTDictionary[str | int | float, str | int | float]()
         mydict.from_dict({1: 1, 2: 2, 3: 3, 4: 4, 5: 5})
         self.assertEqual(
             mydict.map(lambda key, value: (str(key), str(value))),
@@ -127,7 +127,7 @@ class TestBSTDict(unittest.TestCase):
         )
 
     def test_reduce(self) -> None:
-        mydict = BSTDictionary()
+        mydict = BSTDictionary[str | int | float, str | int | float]()
         mydict.from_dict({})
         self.assertEqual(mydict.reduce(lambda key, value, st:
                                        st + key + value, 0), 0)
@@ -135,21 +135,21 @@ class TestBSTDict(unittest.TestCase):
         self.assertEqual(mydict.reduce(lambda key, value, st: st + key, 0), 10)
 
     @given(st.dictionaries(st.text(), st.text()))
-    def test_from_to_equality(self, a: Dict[Keytype, Valuetype]) -> None:
-        mydict = BSTDictionary()
+    def test_from_to_equality(self, a: Dict[KeyType, ValueType]) -> None:
+        mydict = BSTDictionary[KeyType, ValueType]()
         mydict.from_dict(a)
         b = mydict.to_dict()
         self.assertEqual(a, b)
 
     @given(st.dictionaries(st.text(), st.text()))
-    def test_inequality(self, a: Dict[Keytype, Valuetype]) -> None:
-        mydict = BSTDictionary()
+    def test_inequality(self, a: Dict[KeyType, ValueType]) -> None:
+        mydict = BSTDictionary[KeyType, ValueType]()
         mydict.from_dict(a)
         self.assertEqual(mydict.size(), len(a))
 
     def test_iter(self) -> None:
-        data: Dict[Keytype, Valuetype] = {2: "b", 1: "a", 4: "d", 3: "c"}
-        mydict = BSTDictionary()
+        data: Dict[int, str] = {2: "b", 1: "a", 4: "d", 3: "c"}
+        mydict = BSTDictionary[int, str]()
         mydict.from_dict(data)
 
         keys_in_order = sorted(data.keys())
@@ -164,17 +164,17 @@ class TestBSTDict(unittest.TestCase):
 
         self.assertEqual(data, mydict.to_dict())
 
-        empty_dict = BSTDictionary()
+        empty_dict = BSTDictionary[int | str | float, None]()
         self.assertRaises(StopIteration, lambda: next(iter(empty_dict)))
 
     def test_empty(self) -> None:
-        empty_dict = BSTDictionary().empty()
+        empty_dict = BSTDictionary[int | str | float, None]().empty()
         self.assertEqual(empty_dict.size(), 0)
 
     def test_concat(self) -> None:
-        dict1 = BSTDictionary()
+        dict1 = BSTDictionary[str, int]()
         dict1.from_dict({"a": 1, "b": 2, "c": 3})
-        dict2 = BSTDictionary()
+        dict2 = BSTDictionary[str, int]()
         dict2.from_dict({"c": 3, "d": 4, "e": 5})
         dict1.concat(dict2)
         self.assertEqual(
@@ -187,24 +187,28 @@ class TestBSTDict(unittest.TestCase):
         st.dictionaries(st.text(), st.text()),
     )
     def test_PBT_monoid_Associativity(self,
-                                      a: Dict[Keytype, Valuetype],
-                                      b: Dict[Keytype, Valuetype],
-                                      c: Dict[Keytype, Valuetype]) -> None:
-        dict_a = BSTDictionary()
+                                      a: Dict[KeyType, ValueType],
+                                      b: Dict[KeyType, ValueType],
+                                      c: Dict[KeyType, ValueType]) -> None:
+        dict_a = BSTDictionary[KeyType, ValueType]()
         dict_a.from_dict(a)
-        dict_b = BSTDictionary()
+        dict_b = BSTDictionary[KeyType, ValueType]()
         dict_b.from_dict(b)
-        dict_c = BSTDictionary()
+        dict_c = BSTDictionary[KeyType, ValueType]()
         dict_c.from_dict(c)
-        self.assertEqual((dict_a.concat(dict_b)).concat(dict_c).to_dict(),
-                         dict_a.concat(dict_b.concat(dict_c)).to_dict())
+        dict_1 = dict_a.concat(dict_b)
+        dict_x = dict_1.concat(dict_c)
+        dict_2 = dict_b.concat(dict_c)
+        dict_y = dict_2.concat(dict_a)
+        self.assertEqual(dict_x.to_dict(),
+                         dict_y.to_dict())
 
     @given(st.dictionaries(st.text(), st.text()))
     def test_PBT_monoid_Identity_element(self,
-                                         a: Dict[Keytype, Valuetype]) -> None:
+                                         a: Dict[KeyType, ValueType]) -> None:
         # test for Identity element (empty_dict)
-        empty_dict = BSTDictionary().empty()
-        mydict = BSTDictionary()
+        empty_dict = BSTDictionary[KeyType, ValueType]().empty()
+        mydict = BSTDictionary[KeyType, ValueType]()
         mydict.from_dict(a)
         self.assertEqual(empty_dict.concat(mydict).to_dict(), mydict.to_dict())
         self.assertEqual(mydict.concat(empty_dict).to_dict(), mydict.to_dict())

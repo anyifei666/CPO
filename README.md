@@ -1,3 +1,4 @@
+韩噜噜我的乖宝宝我爱你
 # GROUP-"I like studying" - lab 1 - variant 6
 
 This is my lab1 of CPO class, implementation of mutable data structure dictionary
